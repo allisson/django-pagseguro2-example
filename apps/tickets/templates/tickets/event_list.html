@@ -1,0 +1,29 @@
+{% extends 'tickets/base.html' %}
+
+{% block title %}Lista de eventos{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Eventos</h1>
+      <p class="lead">Selecione o evento para verificar os tickets disponíveis.</p>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+  {% for event in events %}
+  <div class="col-sm-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ event.title }}</h5>
+        <p class="card-text">{{ event.description }}</p>
+        <a href="{% url 'tickets:event_detail' event.id %}" class="btn btn-primary">Ver Tickets</a>
+      </div>
+    </div>
+    <br>
+  </div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

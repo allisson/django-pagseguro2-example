@@ -1,0 +1,19 @@
+env:
+  - SECRET_KEY=my-secret-key
+  - DEBUG=true
+  - PAGSEGURO_EMAIL=fulano@email.com
+  - PAGSEGURO_TOKEN=token
+  - PAGSEGURO_SANDBOX=true
+  - PAGSEGURO_LOG_IN_MODEL=true
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+install:
+  - pip install pipenv
+  - pipenv install --dev
+script:
+  pytest
+after_success:
+  codecov

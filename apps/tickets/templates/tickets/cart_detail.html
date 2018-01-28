@@ -1,0 +1,63 @@
+{% extends 'tickets/base.html' %}
+{% load humanize %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Carrinho de compras</h1>
+      <p class="lead">{{ event.description }}</p>
+    </div>
+  </div>
+  <hr>
+  {% with cart_items=cart.cart_items.all %}
+  {% if cart_items %}
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Item</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Preço unitário</th>
+        <th scope="col">Preço</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cart_item in cart_items %}
+      <tr>
+        <th scope="row">{{ cart_item.ticket.title }}</th>
+        <td>{{ cart_item.quantity }}</td>
+        <td>{{ cart_item.unit_price|intcomma }}</td>
+        <td>{{ cart_item.price|intcomma }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <strong>Total: {{ cart.price|intcomma }}</strong>
+  <hr>
+  <form name="form" onsubmit="return OnSubmitForm();" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary" name="operation" onclick="document.pressed=this.value" value="purchase">Comprar</button>
+    <button type="submit" class="btn btn-danger" name="operation" onclick="document.pressed=this.value" value="clear">Limpar</button>
+  </form>
+  {% else %}
+  Carrinho vazio.
+  {% endif %}
+  {% endwith %}
+
+</div>
+{% endblock %}
+
+{% block extra_body %}
+<script type="text/javascript">
+function OnSubmitForm() {
+  if(document.pressed == 'purchase') {
+   document.form.action = '{% url 'tickets:purchase_create' %}';
+  }
+  else if(document.pressed == 'clear') {
+    document.form.action = '{% url 'tickets:cart_clear' %}';
+  }
+  return true;
+}
+</script>
+
+{% endblock %}

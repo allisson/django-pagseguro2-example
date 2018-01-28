@@ -1,0 +1,42 @@
+{% extends 'tickets/base.html' %}
+{% load humanize %}
+
+{% block title %}Evento: {{ event.title }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">{{ event.title }}</h1>
+      <p class="lead">{{ event.description }}</p>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+  {% for ticket in event.tickets.all %}
+  <div class="col-sm-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ ticket.title }}</h5>
+        <p class="card-text">Preço: <strong>{{ ticket.price|intcomma }}</strong></p>
+        <form class="form-inline" action="{% url 'tickets:cart_add_item' %}" method="post">
+          {% csrf_token %}
+          <select class="form-control mb-2 mr-sm-2" name="quantity" required>
+            <option value="">Quantidade</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <input type="hidden" value="{{ ticket.id }}" name="ticket">
+          <button type="submit" class="btn btn-primary mb-2">Adicionar no carrinho</button>
+        </form>
+      </div>
+    </div>
+    <br>
+  </div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

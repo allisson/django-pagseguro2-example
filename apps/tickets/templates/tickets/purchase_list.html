@@ -1,0 +1,41 @@
+{% extends 'tickets/base.html' %}
+{% load humanize %}
+
+{% block title %}Minhas compras{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Minhas compras</h1>
+    </div>
+  </div>
+  <hr>
+  {% if purchases %}
+  {% for purchase in purchases %}
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Preço</th>
+        <th scope="col">Status</th>
+        <th scope="col">Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for purchase in purchases %}
+      <tr>
+        <th scope="row"><a href="{% url 'tickets:purchase_detail' purchase.id %}">{{ purchase.id }}</a></th>
+        <td>{{ purchase.price|intcomma }}</td>
+        <td>{{ purchase.status }}</td>
+        <td>{{ purchase.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endfor %}
+  {% else %}
+  Você ainda não comprou nada.
+  {% endif %}
+</div>
+{% endblock %}

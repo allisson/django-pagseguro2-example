@@ -1,0 +1,27 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+
+django = "*"
+django-pagseguro2 = "*"
+prettyconf = "*"
+
+[dev-packages]
+
+codecov = "*"
+flake8 = "*"
+ipdb = "*"
+ipython = "*"
+pytest-cov = "*"
+pytest-django = "*"
+pytest-lazy-fixture = "*"
+python-status = "*"
+responses = "*"
+
+[requires]
+
+python_full_version = "3.6.4"

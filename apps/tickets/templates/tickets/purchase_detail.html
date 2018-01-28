@@ -1,0 +1,21 @@
+{% extends 'tickets/base.html' %}
+{% load humanize %}
+
+{% block title %}Compra: {{ purchase.id }} {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Compra {{ purchase.id}}</h1>
+    </div>
+  </div>
+  <hr>
+  <p>Id: <strong>{{ purchase.id }}</strong></p>
+  <p>Preço: <strong>{{ purchase.price|intcomma }}</strong></p>
+  <p>Status: <strong>{{ purchase.get_status_display }}</strong></p>
+  {% if purchase.status == 'pending' %}
+  <p><a href="{{ purchase.pagseguro_redirect_url }}" class="btn btn-primary">Pagar</a></p>
+  {% endif %}
+</div>
+{% endblock %}
