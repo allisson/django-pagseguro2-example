@@ -62,3 +62,17 @@ def test_purchase_create(admin_client, cart_item, pagseguro_checkout_response):
     purchase = Purchase.objects.filter(user=cart_item.cart.user).first()
     assert purchase.status == 'pending'
     assert purchase.pagseguro_redirect_url
+
+
+def test_purchase_list(admin_client, purchase):
+    url = reverse('tickets:purchase_list')
+    response = admin_client.get(url)
+    assert response.status_code == status.HTTP_200_OK
+    assert purchase in response.context['purchases']
+
+
+def test_purchase_detail(admin_client, purchase):
+    url = reverse('tickets:purchase_detail', args=[purchase.id])
+    response = admin_client.get(url)
+    assert response.status_code == status.HTTP_200_OK
+    assert response.context['purchase'] == purchase
