@@ -2,6 +2,7 @@ import uuid
 
 from django.conf import settings
 from django.db import models
+from pagseguro.signals import notificacao_recebida
 
 from .managers import CartManager, PurchaseManager
 
@@ -106,3 +107,10 @@ class Purchase(BaseModel):
         ordering = ['-created_at']
         verbose_name = 'compra'
         verbose_name_plural = 'compras'
+
+
+def update_purchase_status(sender, transaction, **kwargs):
+    Purchase.objects.update_purchase_status(transaction)
+
+
+notificacao_recebida.connect(update_purchase_status)

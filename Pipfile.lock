@@ -52,9 +52,9 @@
         },
         "django-pagseguro2": {
             "hashes": [
-                "sha256:a5ba7ee0bbde4f7af0a361a310a8dd90e91ef753d257bba9dd8cfbe494d5fe23"
+                "sha256:746e376044644ac82ab300063111a9122fa057fc9948c2c7680d96f4eb5c063b"
             ],
-            "version": "==2.0.2"
+            "version": "==2.0.3"
         },
         "idna": {
             "hashes": [

@@ -46,3 +46,17 @@ class PurchaseManager(Manager):
         cart.closed = True
         cart.save()
         return purchase
+
+    def update_purchase_status(self, pagseguro_transaction):
+        status_map = {
+            '3': 'paid',
+            '7': 'canceled'
+        }
+        purchase = self.filter(id=pagseguro_transaction['reference']).first()
+        if not purchase:
+            return
+        if pagseguro_transaction['status'] not in ('3', '7'):
+            return purchase
+        purchase.status = status_map[pagseguro_transaction['status']]
+        purchase.save()
+        return purchase

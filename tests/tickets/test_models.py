@@ -3,6 +3,7 @@ from decimal import Decimal
 
 import pytest
 import responses
+from django.urls import reverse
 
 from apps.tickets.exceptions import CheckoutException
 from apps.tickets.models import Cart, CartItem, Purchase
@@ -111,3 +112,47 @@ def test_purchase_manager_create_checkout_with_error(cart_item, pagseguro_checko
     cart = cart_item.cart
     with pytest.raises(CheckoutException):
         Purchase.objects.create_checkout(cart)
+
+
+@pytest.mark.parametrize('pagseguro_status,expected_status', [
+    ('2', 'pending'),
+    ('3', 'paid'),
+    ('4', 'pending'),
+    ('5', 'pending'),
+    ('6', 'pending'),
+    ('7', 'canceled'),
+    ('8', 'pending'),
+    ('9', 'pending'),
+])
+def test_purchase_manager_update_purchase_status(pagseguro_status, expected_status, purchase, pagseguro_transaction):
+    pagseguro_transaction['reference'] = str(purchase.id)
+    pagseguro_transaction['status'] = pagseguro_status
+    purchase = Purchase.objects.update_purchase_status(pagseguro_transaction)
+    assert purchase.status == expected_status
+
+
+def test_purchase_manager_update_purchase_status_with_invalid_reference(pagseguro_transaction):
+    pagseguro_transaction['reference'] = str(uuid.uuid4())
+    assert Purchase.objects.update_purchase_status(pagseguro_transaction) is None
+
+
+@responses.activate
+def test_update_purchase_status(client, purchase, pagseguro_notification, pagseguro_transaction_response):
+    pagseguro_transaction_response = pagseguro_transaction_response.replace(
+        '<reference>9fd05f66-315c-49f9-85f7-c92775f5a54d</reference>',
+        '<reference>{}</reference>'.format(str(purchase.id))
+    )
+    pagseguro_transaction_response = pagseguro_transaction_response.replace(
+        '<status>1</status>', '<status>3</status>'
+    )
+    code = pagseguro_notification['notificationCode']
+    responses.add(
+        responses.GET,
+        'https://ws.sandbox.pagseguro.uol.com.br/v2/transactions/notifications/{}'.format(code),
+        body=pagseguro_transaction_response,
+        status=200
+    )
+    url = reverse('pagseguro_receive_notification')
+    client.post(url, pagseguro_notification)
+    purchase.refresh_from_db()
+    assert purchase.status == 'paid'
