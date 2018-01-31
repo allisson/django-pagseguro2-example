@@ -60,7 +60,7 @@ Como rodar os testes
 Observações
 -----------
 
-* Todas os endereços /eventos/* são protegidos por login e senha, lembre-se de logar no admin antes de acessar.
+* Todos os endereços /eventos/* são protegidos por login e senha, lembre-se de logar no admin antes de acessar.
 * Apenas os status pago e cancelado que vem do PagSeguro foram mapeados nesse projeto.
 
 .. |TravisCI Build Status| image:: https://travis-ci.org/allisson/django-pagseguro2-example.svg?branch=master
