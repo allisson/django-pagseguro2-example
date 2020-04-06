@@ -25,3 +25,10 @@ jobs:
     - name: Run Tests
       run: |
         pipenv run pytest
+      env:
+        SECRET_KEY: my-secret-key
+        DEBUG: true
+        PAGSEGURO_EMAIL: fulano@email.com
+        PAGSEGURO_TOKEN: token
+        PAGSEGURO_SANDBOX: true
+        PAGSEGURO_LOG_IN_MODEL: true
