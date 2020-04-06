@@ -21,3 +21,7 @@ pytest-django = "*"
 pytest-lazy-fixture = "*"
 python-status = "*"
 responses = "*"
+
+[requires]
+
+python_version = "3.8"
