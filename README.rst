@@ -12,7 +12,7 @@ Exemplo de projeto usando o django-pagseguro2.
 Dependências para rodar o projeto
 ---------------------------------
 
-* Python 3.6+
+* Python 3.8+
 * Pipenv
 * `Ngrok`_ (para receber as notificações do PagSeguro)
 
