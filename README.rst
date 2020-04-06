@@ -2,7 +2,7 @@
 django-pagseguro2-example
 =========================
 
-|TravisCI Build Status| |Coverage Status|
+|Github Build Status|
 
 ----
 
@@ -12,7 +12,7 @@ Exemplo de projeto usando o django-pagseguro2.
 Dependências para rodar o projeto
 ---------------------------------
 
-* Python 3.4+
+* Python 3.8+
 * Pipenv
 * `Ngrok`_ (para receber as notificações do PagSeguro)
 
@@ -63,7 +63,5 @@ Observações
 * Todos os endereços /eventos/* são protegidos por login e senha, lembre-se de logar no admin antes de acessar.
 * Apenas os status pago e cancelado que vem do PagSeguro foram mapeados nesse projeto.
 
-.. |TravisCI Build Status| image:: https://travis-ci.org/allisson/django-pagseguro2-example.svg?branch=master
-   :target: https://travis-ci.org/allisson/django-pagseguro2-example
-.. |Coverage Status| image:: https://codecov.io/gh/allisson/django-pagseguro2-example/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/allisson/django-pagseguro2-example
+.. |Github Build Status| image:: https://github.com/allisson/django-pagseguro2-example/workflows/tests/badge.svg
+   :target: https://github.com/allisson/django-pagseguro2-example/actions

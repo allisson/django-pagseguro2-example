@@ -1,0 +1,32 @@
+name: tests
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install Dependencies
+      run: | 
+        python -m pip install --upgrade pip
+        pip install pipenv
+        pipenv install --dev
+    - name: Run Tests
+      run: |
+        pipenv run pytest
+      env:
+        SECRET_KEY: my-secret-key
+        DEBUG: true
+        PAGSEGURO_EMAIL: fulano@email.com
+        PAGSEGURO_TOKEN: token
+        PAGSEGURO_SANDBOX: true
+        PAGSEGURO_LOG_IN_MODEL: true
