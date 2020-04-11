@@ -44,7 +44,7 @@ Como receber notificações do PagSeguro
 
 Anote o endereço do ngrok e atualize no `sandbox do PagSeguro`_
 
-No sandbox, altere uma transação para o status pago e a notificação será enviada para o sistema.
+No sandbox, altere uma transação para o status pago e a notificação será enviada para o sistema. Ex: https://14742c67.ngrok.io/pagseguro/ (observe o '/' no final da url).
 
 .. _`sandbox do PagSeguro`: https://sandbox.pagseguro.uol.com.br/vendedor/configuracoes.html
 
